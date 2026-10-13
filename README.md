@@ -41,4 +41,4 @@ See [Agent Guidance](AGENTS.md), [Build Identity](docs/BUILD_IDENTITY.md), [Migr
 
 ## Hosting Status
 
-This upload does not enable or deploy GitHub Pages. The owner-approved local prototype is preserved separately from the live classroom game. Future site publication requires owner direction. Generated worksheets and browser saves are not uploaded by the app.
+GitHub Pages configuration is prepared for review in a manual-only, gated workflow. It has not been enabled or deployed. See [Pages Readiness And Activation Plan](docs/PAGES.md). The owner-approved prototype remains separate from the live classroom game. Future site publication requires owner direction. Generated worksheets and browser saves are not uploaded by the app.
