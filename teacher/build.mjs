@@ -27,6 +27,11 @@ try{
   for(const file of await fs.readdir(directory))if(/^(license|copyright)/i.test(file))await fs.copyFile(path.join(directory,file),path.join(output,'licenses',name.replaceAll('/','-').replace('@','')+'-'+file));
  }
  await fs.copyFile('THIRD_PARTY_NOTICES.md',path.join(output,'THIRD_PARTY_NOTICES.md'));
+ // fontkit's published package places its MIT notice in README, not a LICENSE file.
+ for(const file of ['README.md','package.json'])await fs.copyFile(path.join('node_modules/@pdf-lib/fontkit',file),path.join(output,'licenses','pdf-lib-fontkit-'+file));
+ const fontkitSource=await fs.readFile('node_modules/@pdf-lib/fontkit/dist/fontkit.es.js','utf8');
+ const notices=(fontkitSource.match(/\/\*[\s\S]*?\*\/|(?:^[ \t]*\/\/.*\r?\n)+/gm)||[]).filter(c=>/copyright|licen[sc]e/i.test(c));
+ await fs.writeFile(path.join(output,'licenses','pdf-lib-fontkit-bundled-notices.txt'),notices.join('\n\n'));
  await fs.copyFile('teacher/style.css',path.join(output,'style.css'));await fs.cp('vendor/multiview-mystery/fonts',path.join(output,'fonts'),{recursive:true});await fs.cp('teacher/fonts',path.join(output,'fonts'),{recursive:true});
  await fs.writeFile(path.join(output,'index.html'),(await fs.readFile('teacher/index.html','utf8')).replace('Live Development · Local Teacher Companion',id));
  await fs.writeFile(path.join(output,'build-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
