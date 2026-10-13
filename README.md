@@ -2,6 +2,8 @@
 
 Build a unit-cube model, choose which views students receive, and export paper practice with a complete teacher key. This is the independent teacher companion to [Multiview Mystery](https://github.com/AbbyUsesAIThatCodes/MultiviewMystery).
 
+**[Open Multiview Worksheet Studio](https://abbyusesaithatcodes.github.io/MultiviewWorksheetStudio/)**
+
 ## Run Locally
 
 Requires Node.js 22.13 or newer.
@@ -41,4 +43,4 @@ See [Agent Guidance](AGENTS.md), [Build Identity](docs/BUILD_IDENTITY.md), [Migr
 
 ## Hosting Status
 
-GitHub Pages configuration is prepared for review in a manual-only, gated workflow. It has not been enabled or deployed. See [Pages Readiness And Activation Plan](docs/PAGES.md). The owner-approved prototype remains separate from the live classroom game. Future site publication requires owner direction. Generated worksheets and browser saves are not uploaded by the app.
+The owner-approved public site is live on GitHub Pages. Publication remains manual and gated; ordinary pushes do not deploy. See [Pages Hosting And Verification](docs/PAGES.md) for the exact published build and verification record. The companion remains separate from the live classroom game. Generated worksheets and browser saves are not uploaded by the app.

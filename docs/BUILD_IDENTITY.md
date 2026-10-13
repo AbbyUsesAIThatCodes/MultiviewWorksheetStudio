@@ -6,7 +6,7 @@ The builder captures UTC once, records the full Git SHA and build-input SHA-256,
 
 The local allocator uses an exclusive directory lock and counter in .git/teacher-builds/ledger.json, with a durable per-checkout local-teacher scope. Failed reservations are retained. Concurrent invocations cannot share an ordinal. Reopening or testing an artifact does not mint a new identity.
 
-Local builds retain their explicit local scope. The prepared CI builder reserves PR/main ordinals by atomically creating append-only Git refs under tags/teacher-build-ledger/<scope>/<ordinal>; duplicate creation retries from current shared state. Failed reservations remain. PR events retain both built SHA and PR head, and a new PR has its own counter starting at one. Non-PR CI builds are accepted only on main. The workflow is serialized; atomic ref creation is the collision guard. The built-in token needs contents:write only for the build job. No remote ledger has been written during this preparation.
+Local builds retain their explicit local scope. The CI builder reserves PR/main ordinals by atomically creating append-only Git refs under tags/teacher-build-ledger/<scope>/<ordinal>; duplicate creation retries from current shared state. Failed reservations remain. PR events retain both built SHA and PR head, and a new PR has its own counter starting at one. Non-PR CI builds are accepted only on main. The workflow is serialized; atomic ref creation is the collision guard. The built-in token needs contents:write only for the build job. The approved October 13 publication reserved main ordinal 001 for validation and 002 for publication; see [Pages Hosting And Verification](PAGES.md).
 
 | Surface | Location | State |
 | --- | --- | --- |
@@ -23,10 +23,11 @@ Local builds retain their explicit local scope. The prepared CI builder reserves
 | Tests | teacher/tests.mjs, teacher/identity-test.mjs | Reuse and concurrent allocation |
 | Current Review | docs/MIGRATION.md and PR description | Exact verification record |
 | Contributor Guidance | AGENTS.md and PR template | Linked contract |
-| CI Counter | teacher/reserve-ci.mjs and Git teacher-build-ledger tags | Prepared; locally tested with mocked conflicts |
+| CI Counter | teacher/reserve-ci.mjs and Git teacher-build-ledger tags | Active; main 001 and 002 reserved; mocked conflict tests pass |
 | CI Summary | GITHUB_STEP_SUMMARY from teacher/build.mjs | Same ID/source |
-| Manual CI | .github/workflows/pages.yml | Prepared; no workflow run dispatched |
+| Manual CI | .github/workflows/pages.yml | Validation and publication runs passed |
 | Publication | Deploy job downloads exact tested site artifact | Gated; no rebuild |
+| Published Record | docs/PAGES.md | Exact live identity, source, and workflow links |
 | Readiness | docs/PAGES.md, teacher/pages-test.mjs | Subpath/runtime checks |
 | IDE | None | Inapplicable |
 
