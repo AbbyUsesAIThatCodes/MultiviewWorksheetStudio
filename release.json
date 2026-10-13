@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0",
+  "codename": "First Light",
+  "slug": "First-Light",
+  "status": "development",
+  "policy": "Normalizes the imported v0.1 milestone to major.minor.patch. No persisted save format or public API is changed. New release numbering awaits milestone acceptance."
+}
