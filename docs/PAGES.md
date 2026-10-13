@@ -34,7 +34,9 @@ Expected project URL, not yet live: https://abbyusesaithatcodes.github.io/Multiv
 
 ## Evidence And Limits
 
-Local readiness tests serve the artifact at /MultiviewWorksheetStudio/, exercise both PDF exports, observe every runtime request, check browser persistence, and test offline export after loading. The CI reservation logic is tested against concurrent mocked requests; no remote ref was created by that test. The workflow will be linted locally. Actual Linux Actions execution, GitHub environment approval, and Pages deployment remain unverified until authorized execution.
+Local readiness tests serve the artifact at /MultiviewWorksheetStudio/, exercise both PDF exports, observe every runtime request, check browser persistence, and test offline export after loading. All 11 readiness checks passed: UI/PDF fonts resolve under the project path; the app made only same-path GET requests; both PDF exports and restored local fields worked. Concurrent mocked CI reservations remained unique, and a new PR started at ordinal one. No remote ref was created by those tests. Actionlint 1.7.12 reported no workflow errors. The complete 2,189-assertion browser/PDF suite also passed on the hosting implementation.
+
+Actual Linux Actions execution, GitHub environment approval, and Pages deployment remain unverified until authorized execution. The artifact is ready for review; these local results do not claim a live site.
 
 ## Official References
 

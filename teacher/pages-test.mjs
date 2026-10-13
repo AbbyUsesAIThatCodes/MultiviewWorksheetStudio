@@ -17,8 +17,8 @@ try{
  await page.goto(origin+base);await page.evaluate(()=>document.fonts.ready);
  ok(await page.locator('#build-identity').innerText()===latest.id,'Project subpath loads exact build identity');
  for(const id of ['student','key']){const pending=page.waitForEvent('download');await page.locator('#'+id).click();const file=await pending;const data=await fs.readFile(await file.path());ok(data.subarray(0,5).toString()==='%PDF-',`${id}: direct PDF export works from project subpath`);downloads.push({name:file.suggestedFilename(),bytes:data.length});}
- ok(requests.some(r=>r.url().endsWith('.woff2'))&&requests.some(r=>r.url().endsWith('.ttf')),'UI and PDF fonts resolve under project base path');
- ok(requests.every(r=>r.url().startsWith(origin+base)&&r.method==='GET'),'No external runtime requests or data writes');
+ ok(requests.some(r=>r.url.endsWith('.woff2'))&&requests.some(r=>r.url.endsWith('.ttf')),'UI and PDF fonts resolve under project base path');
+ ok(requests.every(r=>r.url.startsWith(origin+base)&&r.method==='GET'),'No external runtime requests or data writes');
  ok(failures.length===0&&errors.length===0,'No missing assets or browser errors at project subpath');
  await page.locator('#title').fill('Local Worksheet');await page.reload();ok(await page.locator('#title').inputValue()==='Local Worksheet','Autosave works at hosted project path');
  // Warm PDF fonts again after reload, then emulate an Internet outage in the open tab.
