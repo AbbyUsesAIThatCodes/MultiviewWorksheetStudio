@@ -32,7 +32,8 @@ for(let bits=0;bits<16;bits++){
  if(bits===0)ok(!draw.some(o=>o.t==='poly'),'No shape polygons in all-blank student display list');
 }
 // Use existing artifact: a test run must never mint a new build identity.
-const before=await fs.readFile('.git/teacher-builds/ledger.json','utf8');
+const readLocalLedger=async()=>fs.readFile('.git/teacher-builds/ledger.json','utf8').catch(e=>{if(e.code==='ENOENT')return null;throw e;});
+const before=await readLocalLedger();
 process.env.PORT='0';const {server}=await import('./serve.mjs');if(!server.listening)await new Promise(r=>server.once('listening',r));
 const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_EXECUTABLE||undefined});
 const page=await browser.newPage({viewport:{width:1540,height:1050}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
@@ -110,5 +111,5 @@ assert.deepEqual(projection(second,'right').depths,[[n,n,n,n],[n,2,n,n],[0,2,n,n
 assert.deepEqual(projection(second,'top').depths,[[n,n,n,n],[n,n,n,n],[n,0,2,n],[1,0,n,n]]);checks.push('Second asymmetric front-loaded fixture matches independent matrices');
 const secondBytes=await createPdf({...fullState,cubes:second,fields:{...fields,title:'Front-Loaded Asymmetry'}},true,fonts,latest.manifest);await fs.writeFile(path.join(output,'second-asymmetric-key.pdf'),secondBytes);await renderPdf(secondBytes,'second-asymmetric-key');
 const longBytes=await createPdf({...state,fields:{title:'W'.repeat(60),name:'W'.repeat(36),date:'W'.repeat(36),bell:'W'.repeat(36)}},false,fonts,latest.manifest);await fs.writeFile(path.join(output,'long-fields.pdf'),longBytes);await renderPdf(longBytes,'long-fields');
-ok(await fs.readFile('.git/teacher-builds/ledger.json','utf8')===before,'Reusing artifact for tests preserves build identity');
+ok(await readLocalLedger()===before&&JSON.parse(await fs.readFile('builds/teacher-latest.json','utf8')).id===latest.id,'Reusing artifact for tests preserves build identity');
 const result={id:latest.id,passed:checks.length,checks:[...new Set(checks)],browserErrors:errors};await fs.writeFile(path.join(output,'results.json'),JSON.stringify(result,null,2));console.log(`PASS ${checks.length} assertions; evidence: ${output}`);
